@@ -1,9 +1,47 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Three
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
 
-<ion-content></ion-content>
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col>
+                <h3>Favoritas</h3>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-slides [options]="sliderOpts" *ngIf="dataLocal.peliculas.length === 0">
+        <ion-slide>
+            <ion-label>No hay películas favoritas</ion-label>
+        </ion-slide>
+    </ion-slides>
+
+    <div *ngFor="let genero of generos">
+
+        <ion-grid *ngIf="(peliculas | genero:genero).length > 0">
+            <ion-row>
+                <ion-col>
+                    <h4>{{ genero.name }}</h4>
+                </ion-col>
+            </ion-row>
+
+            <app-slideshow-poster [peliculas]="peliculas | genero: genero" (reloadFavorito)="loadFavoritos()"></app-slideshow-poster>
+
+        </ion-grid>
+
+    </div>
+
+    <!-- Este codigo se utiliza si no se usa el pipe genero -->
+    <!-- <div *ngFor="let pelicula of favoritoGenero">
+
+        <ion-grid *ngIf="pelicula.pelis.length > 0">
+            <ion-row>
+                <ion-col>
+                    <h4>{{ pelicula.genero }}</h4>
+                </ion-col>
+            </ion-row>
+
+            <app-slideshow-poster [peliculas]="pelicula.pelis" (reloadFavorito)="loadFavoritos()"></app-slideshow-poster>
+
+        </ion-grid>
+
+    </div> -->
+</ion-content>
